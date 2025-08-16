@@ -1,203 +1,63 @@
-/* ===== Origami Webform – Modern Purple Theme =====
-   Scope everything to #entity-container to avoid global overrides
-   Designed for both LTR and RTL. RTL-only tweaks are gated by [dir="rtl"].
-*/
-
-/* Color system */
-:root {
-  --bg-0: #0f0b14;           /* page background behind the form */
-  --panel: #16121f;          /* card/panel background */
-  --panel-2: #1d1729;        /* subtle contrast */
-  --text-1: #f5f3f7;         /* primary text */
-  --text-2: #c7bfd3;         /* secondary text */
-  --muted: #8e7da7;          /* placeholders / hints */
-  --line:  #2a2038;          /* borders */
-  --acc:   #7c3aed;          /* primary purple */
-  --acc-2: #a78bfa;          /* lighter purple */
-  --ok:    #22c55e;
-  --warn:  #f59e0b;
-  --err:   #ef4444;
+/* === Page background === */
+body {
+  background: linear-gradient(180deg, #120e1a 0%, #1a1328 100%) !important;
+  /* deep purple gradient background */
 }
 
-/* Base container */
+/* === Form container === */
 #entity-container {
-  max-width: 960px;
-  margin: 24px auto;
-  padding: 24px 20px;
-  background: linear-gradient(180deg, var(--panel) 0%, var(--panel-2) 100%);
-  color: var(--text-1);
-  border-radius: 16px !important;
-  border: 1px solid var(--line);
-  box-shadow:
-    0 1px 1px rgba(0,0,0,.25),
-    0 12px 32px rgba(124,58,237,.12); /* soft purple glow */
+  background: linear-gradient(180deg, #1d1529 0%, #241a34 100%) !important;
+  border: 1px solid #2f2342 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 28px rgba(124,58,237,.25);
+  padding: 28px 24px !important;
 }
 
-/* Contained typography (avoid global h1/h2/p changes) */
-#entity-container h1,
-#entity-container h2,
-#entity-container h3 {
-  color: var(--text-1);
-  letter-spacing: .2px;
-  margin: 0 0 .5rem;
-}
-#entity-container p,
+/* remove inner white backgrounds inside group panels */
+#entity-container .field_group,
+#entity-container .field_group_body,
 #entity-container .content-box,
-#entity-container .field_name_wrapper .field_name {
-  color: var(--text-2);
+#entity-container .form_data_element_wrap {
+  background: transparent !important;
+  border: 0 !important;
 }
 
-/* Field groups */
-#entity-container .field_group {
-  background: transparent;
-  border: 0;
-  padding: 8px 0;
-}
-#entity-container .field_group_body {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-@media (min-width: 980px) {
-  #entity-container .field_group_body .form_data_element_wrap {
-    width: calc(50% - 8px) !important;
-  }
-}
-
-/* Inputs & Selects (Select2 included) */
+/* === Inputs / textareas === */
 #entity-container input:not(.select2-input),
 #entity-container .textarea_field textarea,
-#entity-container .select2-container-multi .select2-choices,
-#entity-container a.select2-choice {
-  width: 100%;
-  background: #1b1526 !important;
-  color: var(--text-1) !important;
-  border: 1px solid var(--line) !important;
+#entity-container a.select2-choice,
+#entity-container .select2-container-multi .select2-choices {
+  background: #2a203d !important;   /* softer purple instead of black */
+  color: #f5f3f7 !important;
+  border: 1px solid #4b3a63 !important;
   border-radius: 12px !important;
   padding: 12px 14px;
-  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  transition: all .2s ease;
 }
 
-/* Placeholder colors */
-#entity-container ::placeholder,
-#entity-container .select2-search input.select2-input::placeholder {
-  color: var(--muted);
-  opacity: 1;
+/* lighter placeholder */
+#entity-container ::placeholder {
+  color: #c1b2d6;
 }
 
-/* Focus states */
+/* focus state for inputs */
 #entity-container input:not(.select2-input):focus,
-#entity-container .textarea_field textarea:focus,
-#entity-container .select2-container-active .select2-choice,
-#entity-container .select2-container-multi.select2-container-active .select2-choices {
-  outline: none !important;
-  border-color: var(--acc) !important;
-  box-shadow: 0 0 0 3px rgba(124,58,237,.25);
+#entity-container .textarea_field textarea:focus {
+  border-color: #7c3aed !important;
+  box-shadow: 0 0 0 3px rgba(124,58,237,.3);
 }
 
-/* Disabled / readonly */
-#entity-container input[readonly],
-#entity-container input:disabled,
-#entity-container .textarea_field textarea:disabled {
-  opacity: .7;
-  cursor: not-allowed;
-}
-
-/* Labels */
-#entity-container .field_name_wrapper .field_name {
-  font-weight: 600;
-  color: var(--text-1);
-  margin-bottom: 6px;
-}
-
-/* Select2 dropdown */
-#entity-container .select2-drop {
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: #1a1524;
-}
-#entity-container .select2-drop .select2-results {
-  max-height: 260px;
-}
-#entity-container .select2-results .select2-result-label {
-  color: var(--text-1);
-}
-#entity-container .select2-results li:not(.select2-highlighted) {
-  background: transparent;
-}
-#entity-container .select2-results .select2-highlighted {
-  background: var(--acc) !important;
-  color: #fff;
-}
-
-/* Multi-select chips */
-#entity-container .select2-container-multi .select2-choices .select2-search-choice {
-  background: rgba(124,58,237,.18);
-  color: var(--text-1);
-  border: 1px solid rgba(124,58,237,.45);
-  border-radius: 10px;
-  padding: 6px 10px;
-}
-
-/* Buttons */
-#entity-container .create_entity_buttons {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 12px;
-}
+/* === Buttons === */
 #entity-container .create_entity_buttons .btn {
-  border-radius: 12px;
-  background: linear-gradient(180deg, var(--acc) 0%, #6d28d9 100%);
-  color: #fff;
-  font-size: 16px;
+  background: linear-gradient(90deg, #7c3aed, #9f67ff);
+  border-radius: 14px;
   font-weight: 700;
-  padding: 14px 26px;
-  border: 0;
+  padding: 14px 28px;
+  color: #fff !important;
   box-shadow: 0 6px 20px rgba(124,58,237,.35);
-  transition: transform .06s ease, filter .2s ease, box-shadow .2s ease;
+  transition: transform .05s ease, box-shadow .2s ease;
 }
 #entity-container .create_entity_buttons .btn:hover {
-  filter: brightness(1.05);
-  box-shadow: 0 10px 28px rgba(124,58,237,.46);
-}
-#entity-container .create_entity_buttons .btn:active {
-  transform: translateY(1px);
-}
-
-/* Help popovers / tooltips */
-#entity-container .field_group .modal_tooltip .popover {
-  background: #1b1526 !important;
-  border: 1px solid var(--acc-2);
-  color: var(--text-1);
-}
-#entity-container .field_group .modal_tooltip .popover .popover-title {
-  background: transparent;
-  color: var(--text-1);
-  border-bottom: 1px solid var(--line);
-}
-
-/* Fine-tuned spacing inside grid cells */
-#entity-container .form_data_element_wrap {
-  background: transparent;
-  padding: 10px;
-  border-radius: 12px;
-}
-
-/* Links inside form (if any) */
-#entity-container a {
-  color: var(--acc-2);
-  text-decoration: none;
-}
-#entity-container a:hover { text-decoration: underline; }
-
-/* Make final action row (often system-generated) hidden if needed */
-form#form-entity > div:last-child { display: none; }
-
-/* RTL support: align text on RTL pages only */
-[dir="rtl"] #entity-container input:not(.select2-input),
-[dir="rtl"] #entity-container .textarea_field textarea,
-[dir="rtl"] #entity-container a.select2-choice,
-[dir="rtl"] #entity-container .select2-container-multi .select2-choices {
-  text-align: right !important;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 26px rgba(124,58,237,.5);
 }
