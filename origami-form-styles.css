@@ -1,63 +1,192 @@
-/* === Page background === */
-body {
-  background: linear-gradient(180deg, #120e1a 0%, #1a1328 100%) !important;
-  /* deep purple gradient background */
+/* ===========================================================
+   Origami Webform – Modern Light Mode (MS Forms–style)
+   -----------------------------------------------------------
+   Goals: clean white surfaces, soft grays, large touch targets,
+   subtle shadows, crisp focus ring, purple accent.
+   Scope: only inside the embedded form container.
+   =========================================================== */
+
+/* --- Palette --- */
+:root {
+  --page-bg: #f5f7fb;       /* app/page background */
+  --card-bg: #ffffff;       /* form card */
+  --subtle:  #f3f4f6;       /* subtle areas / dividers */
+  --text-1:  #1f2937;       /* primary text */
+  --text-2:  #6b7280;       /* secondary text */
+  --line:    #e5e7eb;       /* borders */
+  --accent:  #7c3aed;       /* purple accent */
+  --accent-2:#a78bfa;       /* lighter accent */
+  --ok:      #16a34a;
+  --err:     #ef4444;
 }
 
-/* === Form container === */
-#entity-container {
-  background: linear-gradient(180deg, #1d1529 0%, #241a34 100%) !important;
-  border: 1px solid #2f2342 !important;
-  border-radius: 20px !important;
-  box-shadow: 0 8px 28px rgba(124,58,237,.25);
-  padding: 28px 24px !important;
+/* --- Page background (only where the form sits) --- */
+div[data-origamiformid] body,
+div[data-origamiformid] {
+  background: var(--page-bg) !important;
 }
 
-/* remove inner white backgrounds inside group panels */
-#entity-container .field_group,
-#entity-container .field_group_body,
-#entity-container .content-box,
-#entity-container .form_data_element_wrap {
+/* --- Main form "card" container --- */
+div[data-origamiformid] #entity-container {
+  max-width: 900px;
+  margin: 24px auto;
+  padding: 28px 28px 20px;
+  background: var(--card-bg) !important;
+  color: var(--text-1);
+  border: 1px solid var(--line) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06) !important; /* soft */
+}
+
+/* Remove legacy dark sections / panels */
+div[data-origamiformid] #entity-container .field_group,
+div[data-origamiformid] #entity-container .field_group_body,
+div[data-origamiformid] #entity-container .content-box,
+div[data-origamiformid] #entity-container .form_data_element_wrap {
   background: transparent !important;
   border: 0 !important;
+  box-shadow: none !important;
 }
 
-/* === Inputs / textareas === */
-#entity-container input:not(.select2-input),
-#entity-container .textarea_field textarea,
-#entity-container a.select2-choice,
-#entity-container .select2-container-multi .select2-choices {
-  background: #2a203d !important;   /* softer purple instead of black */
-  color: #f5f3f7 !important;
-  border: 1px solid #4b3a63 !important;
+/* --- Headers & helper text --- */
+div[data-origamiformid] #entity-container h1,
+div[data-origamiformid] #entity-container h2,
+div[data-origamiformid] #entity-container h3 {
+  color: var(--text-1);
+  margin: 0 0 .5rem;
+  letter-spacing: .2px;
+}
+div[data-origamiformid] #entity-container .field_name_wrapper .field_name,
+div[data-origamiformid] #entity-container label {
+  color: var(--text-1);
+  font-weight: 600;
+}
+div[data-origamiformid] #entity-container p,
+div[data-origamiformid] #entity-container .hint,
+div[data-origamiformid] #entity-container .subtext {
+  color: var(--text-2);
+}
+
+/* --- Grid / spacing --- */
+div[data-origamiformid] #entity-container .field_group_body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 980px) {
+  div[data-origamiformid] #entity-container .field_group_body {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- Inputs / Textareas / Select2 --- */
+div[data-origamiformid] #entity-container input:not(.select2-input),
+div[data-origamiformid] #entity-container .textarea_field textarea,
+div[data-origamiformid] #entity-container a.select2-choice,
+div[data-origamiformid] #entity-container .select2-container-multi .select2-choices {
+  width: 100%;
+  background: #fff !important;              /* lighter, not dark */
+  color: var(--text-1) !important;
+  border: 1px solid var(--line) !important;
   border-radius: 12px !important;
   padding: 12px 14px;
-  transition: all .2s ease;
+  min-height: 44px;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
 }
 
-/* lighter placeholder */
-#entity-container ::placeholder {
-  color: #c1b2d6;
+/* Placeholder */
+div[data-origamiformid] #entity-container ::placeholder {
+  color: #9ca3af;
 }
 
-/* focus state for inputs */
-#entity-container input:not(.select2-input):focus,
-#entity-container .textarea_field textarea:focus {
-  border-color: #7c3aed !important;
-  box-shadow: 0 0 0 3px rgba(124,58,237,.3);
+/* Hover & Focus */
+div[data-origamiformid] #entity-container input:not(.select2-input):hover,
+div[data-origamiformid] #entity-container .textarea_field textarea:hover,
+div[data-origamiformid] #entity-container a.select2-choice:hover,
+div[data-origamiformid] #entity-container .select2-container-multi .select2-choices:hover {
+  border-color: #d1d5db !important;
+}
+div[data-origamiformid] #entity-container input:not(.select2-input):focus,
+div[data-origamiformid] #entity-container .textarea_field textarea:focus,
+div[data-origamiformid] #entity-container .select2-container-active .select2-choice,
+div[data-origamiformid] #entity-container .select2-container-multi.select2-container-active .select2-choices {
+  outline: none !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
 }
 
-/* === Buttons === */
-#entity-container .create_entity_buttons .btn {
-  background: linear-gradient(90deg, #7c3aed, #9f67ff);
-  border-radius: 14px;
+/* Select2 dropdown */
+div[data-origamiformid] #entity-container .select2-drop {
+  border-radius: 12px !important;
+  border: 1px solid var(--line) !important;
+  background: #fff !important;
+  color: var(--text-1);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+}
+div[data-origamiformid] #entity-container .select2-results .select2-result-label { color: var(--text-1); }
+div[data-origamiformid] #entity-container .select2-results .select2-highlighted {
+  background: var(--accent) !important;
+  color: #fff;
+}
+
+/* Validation states */
+div[data-origamiformid] #entity-container .has-error input,
+div[data-origamiformid] #entity-container .has-error textarea {
+  border-color: var(--err) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+/* --- Section separators / titles (like MS Forms) --- */
+div[data-origamiformid] #entity-container .field_group_header,
+div[data-origamiformid] #entity-container .section_title {
+  color: var(--text-1);
   font-weight: 700;
-  padding: 14px 28px;
-  color: #fff !important;
-  box-shadow: 0 6px 20px rgba(124,58,237,.35);
-  transition: transform .05s ease, box-shadow .2s ease;
+  margin: 8px 0 4px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
 }
-#entity-container .create_entity_buttons .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 26px rgba(124,58,237,.5);
+
+/* --- Submit button --- */
+div[data-origamiformid] #entity-container .create_entity_buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+div[data-origamiformid] #entity-container .create_entity_buttons .btn {
+  border: 0 !important;
+  border-radius: 12px !important;
+  background: var(--accent) !important;
+  color: #fff !important;
+  font-weight: 700;
+  padding: 12px 22px !important;
+  min-height: 44px !important;
+  box-shadow: 0 6px 14px rgba(124, 58, 237, 0.28);
+  transition: transform .05s ease, box-shadow .15s ease, filter .15s ease;
+}
+div[data-origamiformid] #entity-container .create_entity_buttons .btn:hover {
+  filter: brightness(1.05);
+  box-shadow: 0 10px 22px rgba(124, 58, 237, 0.38);
+}
+div[data-origamiformid] #entity-container .create_entity_buttons .btn:active {
+  transform: translateY(1px);
+}
+
+/* --- Footer/consent panel looks like a light card --- */
+div[data-origamiformid] #entity-container .consent,
+div[data-origamiformid] #entity-container .footer,
+div[data-origamiformid] #entity-container .content-box:last-child {
+  background: var(--subtle) !important;
+  color: var(--text-2);
+  border: 1px solid var(--line) !important;
+  border-radius: 12px !important;
+  padding: 12px 14px !important;
+}
+
+/* --- RTL: keep text aligned right in inputs on RTL pages only --- */
+[dir="rtl"] div[data-origamiformid] #entity-container input:not(.select2-input),
+[dir="rtl"] div[data-origamiformid] #entity-container .textarea_field textarea,
+[dir="rtl"] div[data-origamiformid] #entity-container a.select2-choice,
+[dir="rtl"] div[data-origamiformid] #entity-container .select2-container-multi .select2-choices {
+  text-align: right !important;
 }
